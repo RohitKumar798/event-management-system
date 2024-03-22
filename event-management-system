@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+}
+
+h2 {
+    color: #333;
+}
+
+.event {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Event Management Website</h1>
+    </header>
+    
+    <div class="container">
+        <h2>Upcoming Events</h2>
+        <div id="events">
+            <!-- Events will be dynamically added here -->
+        </div>
+    </div>
+
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Registration Form</h2>
+            <form id="registrationForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js">
+        document.addEventListener("DOMContentLoaded", function() {
+    const eventsContainer = document.getElementById("events");
+    const registrationModal = document.getElementById("registrationModal");
+    const closeBtn = document.querySelector(".close");
+    const registrationForm = document.getElementById("registrationForm");
+
+    // Sample events data
+    const eventsData = [
+        { title: "Event 1", date: "January 1, 2024", location: "City Hall" },
+        { title: "Event 2", date: "February 15, 2024", location: "Convention Center" }
+    ];
+
+    // Display events
+    eventsData.forEach(event => {
+        const eventDiv = document.createElement("div");
+        eventDiv.classList.add("event");
+        eventDiv.innerHTML = `
+            <h3>${event.title}</h3>
+            <p>Date: ${event.date}</p>
+            <p>Location: ${event.location}</p>
+            <button class="registerBtn">Register</button>
+        `;
+        eventsContainer.appendChild(eventDiv);
+    });
+
+    // Show registration modal
+    eventsContainer.addEventListener("click", function(e) {
+        if (e.target.classList.contains("registerBtn")) {
+            registrationModal.style.display = "block";
+        }
+    });
+
+    // Close registration modal
+    closeBtn.addEventListener("click", function() {
+        registrationModal.style.display = "none";
+    });
+
+    // Register for event
+    registrationForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        console.log("Name:", name);
+        console.log("Email:", email);
+        registrationModal.style.display = "none";
+    });
+});
+
+    </script>
+</body>
+</html>
